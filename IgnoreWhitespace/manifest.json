@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+  "name": "Git Ignore Whitespace",
+  "description": "Reloads git code compare screens with the ignore whitespace option enabled",
+  "icons": {
+    "16": "images/git-dark-16.png",
+    "32": "images/git-dark-32.png",
+    "48": "images/git-dark-48.png",
+    "128": "images/git-dark-128.png"
+  },
+  "version": "1.0",
+  "background": {
+    "persistent": true,
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_icon": "images/git-dark-48.png",
+    "default_title": "Git Ignore Whitespace"
+  },
+  "permissions": ["tabs","contextMenus"]
+}
