@@ -7,7 +7,7 @@ var forwardedTabs = new Map();  //keep track of tabs we have already forwarded
 const RELOAD_DELAY = 10000;
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
-  console.log("chrome.tabs.onUpdated: status: " + changeInfo.status + " url: " + tab.url + " json: " + JSON.stringify(tab));
+  console.log("chrome.tabs.onUpdated: url: " + tab.url + " json: " + JSON.stringify(tab));
 
   //check if this is a valid git URL
   if (alwaysForward && gitMatch(tab.url)) {
@@ -56,7 +56,8 @@ chrome.browserAction.onClicked.addListener(function(tab) {
  * Test if a URL is a git file compare
  */
 function gitMatch(str) {
-  var gitRegex = new RegExp("^.*git.*\/pull\/[0-9]*\/files$");
+  var gitPullRegex = new RegExp("^.*git.*\/pull\/[0-9]*\/files$");
+  var gitCommitRegex = new RegExp("^.*git.*\/commit\/[0-9a-f]*$");
 
-  return gitRegex.test(str);
+  return gitPullRegex.test(str) || gitCommitRegex.test(str);
 }
