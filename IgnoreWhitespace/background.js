@@ -3,16 +3,27 @@
 // found in the LICENSE file.
 
 var alwaysForward = true;
+var forwardedTabs = new Map();  //keep track of tabs we have already forwarded
+const RELOAD_DELAY = 10000;
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   console.log("chrome.tabs.onUpdated: status: " + changeInfo.status + " url: " + tab.url + " json: " + JSON.stringify(tab));
 
+  //check if this is a valid git URL
   if (alwaysForward && gitMatch(tab.url)) {
-    wUrl = tab.url + "?w=1";
-    console.log("forwarding to: " + wUrl);
 
-    //Update the url here.
-    chrome.tabs.update(tab.id, {url: wUrl});
+    //make sure we haven't recently forwarded this page (fix for endless forward loop)
+    var tabKey = [tabId, tab.url].join();
+    var tabValue = forwardedTabs.get(tabKey);
+    //console.log("tabKey: " + tabKey + " value: " + tabValue + " now: " + Date.now());
+    if (typeof(tabValue) == "undefined" || tabValue + RELOAD_DELAY < Date.now()) {
+      wUrl = tab.url + "?w=1";
+      console.log("forwarding to: " + wUrl);
+      forwardedTabs.set(tabKey, Date.now());
+
+      //Update the url here.
+      chrome.tabs.update(tab.id, {url: wUrl});
+    }
   }
 
 });
