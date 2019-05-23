@@ -1,4 +1,4 @@
-// Copyright (c) 2019 August Detlefsen. All rights reserved.
+  // Copyright (c) 2019 August Detlefsen. All rights reserved.
 // Use of this source code is governed by an Apache-style license that can be
 // found in the LICENSE file.
 
@@ -56,7 +56,7 @@ chrome.browserAction.onClicked.addListener(function(tab) {
  * Test if a URL is a git file compare
  */
 function gitMatch(str) {
-  var gitPullRegex = new RegExp("^.*git.*\/pull\/[0-9]*\/files$");
+  var gitPullRegex = new RegExp("^.*git.*\/pull\/[0-9]*\/files(\/[0-9a-f]*)?$");
   var gitCommitRegex = new RegExp("^.*git.*\/commit\/[0-9a-f]*$");
 
   return gitPullRegex.test(str) || gitCommitRegex.test(str);
