@@ -4,7 +4,7 @@
 
 var alwaysForward = true;
 var forwardedTabs = new Map();  //keep track of tabs we have already forwarded
-const RELOAD_DELAY = 10000;
+const RELOAD_DELAY = 100000;
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
   console.log("chrome.tabs.onUpdated: url: " + tab.url + " json: " + JSON.stringify(tab));
